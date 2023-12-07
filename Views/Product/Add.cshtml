@@ -1,0 +1,119 @@
+﻿@model MVC_CRUD.Models.AddProductViewModel
+@inject MVC_CRUD.Controllers.ProductController _productController
+
+@{
+
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Upload Products
+            </div>
+            <div class="card-body">
+                <!--<form method="post" action="uploadFile" class="mt-3">-->
+                    <input type="file" id="productsInfo" name="productsInfo" accept=".csv,.xml" />
+                    <button id="processButton" class="btn btn-primary">Submit</button>
+                <!--</form>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Add Product
+            </div>
+            <div class="card-body">
+                <form method="post" action="Add" class="mt-3">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" asp-for="productName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantity</label>
+                        <input type="number" class="form-control" asp-for="productQuantity" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Cost</label>
+                        <input type="number" class="form-control" asp-for="productCost" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Supplier</label>
+                        <input type="text" class="form-control" asp-for="supplier" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-control" asp-for="description" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Product Image</label>
+                        <input type="text" class="form-control" asp-for="productImage" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category ID</label>
+                        <input type="number" class="form-control" asp-for="categoryID" />
+                    </div>
+                    <button id-="processButton" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var listOfProducts = [];
+    document.getElementById("processButton").addEventListener("click", processCSV);
+
+    function processCSV() {
+        console.log("Button Clicked!");
+        var stringToSend = ["Hello","Bye"];
+        const fileInput = document.getElementById('productsInfo');
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+       
+        reader.onload = function (e) {
+          var rows = e.target.result.split('\n');
+          stringToSend = rows;
+            $.ajax({
+                url: '/Product/uploadFile',
+                type: "POST",
+                data: {
+                    stringToSend: stringToSend
+                },
+                success: function (data) {
+                    console.log("Done!");
+                    window.alert("Successfully sent the string!");
+                    window.location.replace("/");
+
+                },
+                error: function () {
+                    alert("There was an error sending the string!");
+                }
+            });
+          
+        };
+        reader.readAsText(file);
+
+        
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        /*reader.onload = function (e) {
+            var rows = e.target.result.split('\n');
+            $.ajax({
+                url: '/Product/uploadFile',
+                type: "POST",
+                data: rows,
+            });
+        };
+        reader.readAsText(file);*/
+    
+</script>

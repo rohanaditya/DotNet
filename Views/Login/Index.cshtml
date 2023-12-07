@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Login";
+
+}
+<script>
+    function enteredEmail(email) {
+        sessionStorage.setItem('email', email);
+    }
+</script>
+<style>
+    .loginContainer{
+        background: rgb(198,236,237);
+        background: linear-gradient(180deg, rgba(198,236,237,1) 0%, rgba(72,72,72,1) 100%);
+        width: 300px;
+        height: 350px;
+        border-radius: 10px;
+        margin: 0 auto;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h1 {
+        margin-top: 10px;
+    }
+    input{
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    media screen and (max-width: 576px) {
+        .loginContainer {
+        width: 60%;
+        height: auto;
+    }
+}
+
+</style>
+
+<div class="loginContainer">
+    <h1>LOGIN</h1>
+
+    <form method="post" action="@Url.Action("Index", "Login")" class="mt-1">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="email">
+        </div>
+        <div class="mb-3">
+            <label for="pin" class="form-label">PIN</label>
+            <input type="password" class="form-control" name="pin" id="pin">
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="enteredEmail(document.getElementById('email').value)">Submit</button>
+    </form>
+    @if (ViewBag.ClearEmailFromSessionStorage==null)
+    {
+        <script>
+            sessionStorage.removeItem('email');
+        </script>
+    }
+</div>

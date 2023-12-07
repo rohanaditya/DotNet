@@ -1,0 +1,68 @@
+﻿@model MVC_CRUD.Models.AddUserViewModel
+@{
+}
+<style>
+    .signupContainer {
+        background: rgb(198,236,237);
+        background: linear-gradient(180deg, rgba(198,236,237,1) 0%, rgba(72,72,72,1) 100%);
+        width: 350px;
+        height: 630px;
+        border-radius: 10px;
+        margin: 0 auto;
+        /*padding: 20px;*/
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h1 {
+        margin-top: 10px;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    media screen and (max-width: 576px) {
+        .signupContainer{
+            width: 60%;
+            height: auto;
+        }
+    }
+</style>
+<div class="signupContainer">
+    <h1>SIGN-UP</h1>
+    <form method="post" action="Add" class="mt-1">
+        <div class="mb-2">
+            <label for="" class="form-label">Name</label>
+            <input type="text" class="form-control" asp-for="userName">
+        </div>
+        <div class="mb-2">
+            <label for="" class="form-label">Email</label>
+            <input type="email" class="form-control" asp-for="email">
+        </div>
+        <div class="mb-2">
+            <label for="" class="form-label">Address</label>
+            <input type="text" class="form-control" asp-for="address">
+        </div>
+        <div class="mb-2">
+            <label for="" class="form-label">Pincode</label>
+            <input type="number" class="form-control" asp-for="pincode">
+        </div>
+        <div class="mb-2">
+            <label for="" class="form-label">Mobile</label>
+            <input type="number" class="form-control" asp-for="mobile">
+        </div>
+        <div class="mb-2">
+            <label for="" class="form-label">Wallet Balance</label>
+            <input type="number" class="form-control" asp-for="walletBalance">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+</div>

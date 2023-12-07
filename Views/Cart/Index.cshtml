@@ -1,0 +1,91 @@
+﻿@inject MVC_CRUD.Controllers.ProductController _productController
+@inject MVC_CRUD.Controllers.CartController _cartController
+
+
+
+@{
+    ViewBag.Title = "Product Details";
+    string productId = Context.Request.Query["productId"];
+    var product = @_productController.findProductByID(productId);
+    var productWithID = @_cartController.convertToJson(product);
+    var quantity = 0;
+}
+
+<body>
+    <style>
+        .product-detail-image{
+            height: 100%;
+            width: 100%;
+            border-radius: 2px;
+        }
+        .product-detail-card {
+            border: 2px solid #ECECEC;
+            border-radius: 4px;
+            padding: 16px;
+        }
+        .product-id{
+            font-size: 6pt;
+        }
+
+        .product-tax {
+            font-size: 8pt;
+        }
+
+        select {
+            width: 100px;
+            border: 1px solid #CCC;
+            border-radius: 10px;
+            padding: 5px;   
+        }
+
+            
+    </style>
+    <form method="post" action="@Url.Action("GoBack", "Cart")" class="mt-5">
+        <button type="submit" class="btn btn-primary mb-3">Back to Products</button>
+    </form>
+
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="product-detail-card mb-3">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <img class="product-detail-image" src="@productWithID.productImage" class="card-img-top" alt="...">
+                        </div>
+                        <div class="col-lg-4 ">
+                            <h2>@productWithID.productName</h2>
+                            <p class="product-id">@productWithID.productID</p>
+                            <p><b>About this item: </b>@productWithID.description</p>
+                            <p><b>Supplier: </b>@productWithID.supplier</p>
+                            <label for="qty">Quantity:</label>
+                            <select name="qty" id="qty" onchange="updateQuantity()">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <hr />
+                            <h4>Rs. @productWithID.productCost</h4>
+                            <p class="product-tax">
+                                 Inclusive of all taxes
+                            </p>
+                            <hr />
+                            <button class="btn btn-success" onclick="addToCart()">ADD TO CART</button>
+                            <a href="@Url.Action("Index", "Checkout")" class="btn btn-success">CHECKOUT</a>
+
+                            <!--<button class="btn btn-success" onclick="addToCart()">ADD TO CART</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function addToCart() {
+        var quantity = document.getElementById("qty").value;
+        console.log(quantity);
+        var productId = "@productId";
+        @_cartController.AddItemToCart(productId, quantity);
+    }
+</script>
